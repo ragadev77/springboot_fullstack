@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "ab1dd178-bed2-43fa-8baf-74098c053610",
+		"name": "springboot_fullstack",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20288623"
+	},
+	"item": [
+		{
+			"name": "konsumen - list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8888/konsumen/list"
+			},
+			"response": []
+		},
+		{
+			"name": "konsumen - add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"nama\": \"Rihanna\",\r\n    \"alamat\": \"Jl. Raya\",\r\n    \"kota\": \"Jakarta\",\r\n    \"provinsi\": \"DKI Jakarta\",\r\n    \"tgl_registrasi\": \"2016-08-10T00:00:00\",\r\n    \"status\": \"Aktif\"\r\n}    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8888/konsumen/add"
+			},
+			"response": []
+		},
+		{
+			"name": "konsumen - get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"nama\": \"Rihanna\",\r\n    \"alamat\": \"Jl. Raya\",\r\n    \"kota\": \"Jakarta\",\r\n    \"provinsi\": \"DKI Jakarta\",\r\n    \"tgl_registrasi\": \"2016-08-10T00:00:00\",\r\n    \"status\": \"Aktif\"\r\n}    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8888/konsumen/1"
+			},
+			"response": []
+		},
+		{
+			"name": "konsumen - update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"id\": 2,\r\n    \"nama\": \"Second Name\",\r\n    \"alamat\": \"Jl. Jalan 2\",\r\n    \"kota\": \"Medan\",\r\n    \"provinsi\": \"Sumatera Utara\",\r\n    \"tgl_registrasi\": \"2016-08-10T00:00:00\",\r\n    \"status\": \"Aktif\"\r\n}    \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8888/konsumen/update/1"
+			},
+			"response": []
+		},
+		{
+			"name": "konsumen - delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"id\": 2,\r\n    \"nama\": \"Second Name\",\r\n    \"alamat\": \"Jl. Jalan 2\",\r\n    \"kota\": \"Medan\",\r\n    \"provinsi\": \"Sumatera Utara\",\r\n    \"tgl_registrasi\": \"2016-08-10T00:00:00\",\r\n    \"status\": \"Aktif\"\r\n}    \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8888/konsumen/del/2"
+			},
+			"response": []
+		}
+	]
+}

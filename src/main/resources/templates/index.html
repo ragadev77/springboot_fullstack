@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>::Konsumen Page::</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mx-auto py-3" >
+    <h2>Konsumen</h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-*">
+            <form id="konsumen-form">
+                <div class="form-group">
+                    <label for="title">ID:</label>
+                    <input type="text" class="form-control" name="id" id="id" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="title">Nama:</label>
+                    <input type="text" class="form-control" name="nama" id="nama" required>
+                    <div class="invalid-feedback">nama is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Alamat:</label>
+                    <input type="text" class="form-control" name="alamat" id="alamat" required>
+                    <div class="invalid-feedback">alamat is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Kota:</label>
+                    <input type="text" class="form-control" name="kota" id="kota" required>
+                    <div class="invalid-feedback">kota is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Provinsi:</label>
+                    <div class="input-group">
+                      <input type="text" name="provinsi" id="provinsi" class="form-control" placeholder="Provinsi" required>
+                      <div class="input-group-append">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih</button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#" data-value="Aceh">Aceh</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="DKI Jakarta">DKI Jakarta</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="Jawa Barat">Jawa Barat</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="Jawa Tengah">Jawa Tengah</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="Maluku">Maluku</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="Sumatra Selatan">Sumatra Selatan</a></li>
+                          <li><a class="dropdown-item" href="#" data-value="Sulawesi Barat">Sulawesi Barat</a></li>
+                        </ul>
+                      </div>
+                      <div class="invalid-feedback">provinsi is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Tanggal Registrasi:</label>
+                    <input type="datetime-local" class="form-control" name="tgl_registrasi" id="tgl_registrasi" required>
+                    <div class="invalid-feedback">tanggal registrasi is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Status:</label>
+                    <br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status" id="aktif" value="Aktif" checked>
+                        <label class="form-check-label" for="aktif">Aktif</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="status" id="non-aktif" value="Non-Aktif">
+                        <label class="form-check-label" for="non-aktif">Non-Aktif</label>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" id="submit-data">Add</button>
+                <button type="button" class="btn btn-warning" id="update-data">Update</button>
+                <button type="button" class="btn btn-danger" id="delete-data">Delete</button>
+                <button type="button" class="btn btn-secondary" id="clear-data">Clear</button>
+            </form>
+        </div>
+        <div class="col-md-8">
+            <table class="table table-dark table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    <th>Alamat</th>
+                    <th>Kota</th>
+                    <th>Provinsi</th>
+                    <th>Tanggal Registrasi</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="konsumen : ${konsumens}"
+                    onclick="populateForm(this)">
+                    <td th:text="${konsumen.id}"></td>
+                    <td th:text="${konsumen.nama}"></td>
+                    <td th:text="${konsumen.alamat}"></td>
+                    <td th:text="${konsumen.kota}"></td>
+                    <td th:text="${konsumen.provinsi}"></td>
+                    <td th:text="${konsumen.tgl_registrasi}"></td>
+                    <td th:text="${konsumen.status}"></td>
+                </tr>
+                </tbody>
+            </table>        
+        </div>
+    </div>
+    <hr>
+</div>
+
+<script>
+    function isFormValid() {
+        // Check if the form is valid
+        var form = document.getElementById('konsumen-form');
+        if (!form.checkValidity()) {
+            form.classList.add('was-validated');
+            return false;
+        }
+        return true;
+    }
+
+    function populateForm(row) {
+        var cells = row.getElementsByTagName("td");
+        document.getElementById("id").value = cells[0].innerHTML;
+        document.getElementById("nama").value = cells[1].innerHTML;
+        document.getElementById("alamat").value = cells[2].innerHTML;
+        document.getElementById("kota").value = cells[3].innerHTML;
+        document.getElementById("provinsi").value = cells[4].innerHTML;
+
+        // Set tgl_registrasi value to local datetime format
+        var tglReg = new Date(cells[5].innerHTML).toISOString().slice(0, -1);
+        document.getElementById("tgl_registrasi").value = tglReg;
+
+        var statusAktif = cells[6].innerHTML === "Aktif" ? true : false;
+        document.getElementById("aktif").checked = statusAktif;
+        document.getElementById("non-aktif").checked = !statusAktif;
+        
+    }
+
+    function submitData(event) {
+        event.preventDefault();
+        var form = document.getElementById('konsumen-form');
+        var formData = new FormData(form);
+        var json = JSON.stringify(Object.fromEntries(formData.entries()));
+
+        fetch('/konsumen/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: json
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network issue');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function updateData(event) {
+        event.preventDefault();
+        if (isFormValid()) {
+
+            var idToUpdate = document.getElementById("id").value;
+            if (idToUpdate === "") {
+                alert("Please select a row to update.");
+                return;
+            }
+            
+            // Get the selected radio button value
+            var status = document.querySelector('input[name="status"]:checked').value;
+
+            var form = document.getElementById('konsumen-form');
+            var formData = new FormData(form);
+            formData.set("status", status);
+
+            var json = JSON.stringify(Object.fromEntries(formData.entries()));
+            console.log(json);
+
+            fetch('/konsumen/update/' + idToUpdate, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: json
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network issue');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Update Success:', data);
+                    location.replace(location.href);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    }
+
+    function deleteData(event) {
+
+        var idToDelete = document.getElementById("id").value;
+        if (idToDelete === "") {
+            alert("Please select a row to delete.");
+            return;
+        }
+
+        fetch('/konsumen/del/' + idToDelete, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network issue');
+                }
+                // Check for empty response
+                if (response.status === 204 || response.headers.get('content-length') === '0') {
+                    return null;
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Delete Success:', data);
+                location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+    function clearData(event) {
+        document.getElementById("id").value = "";
+        document.getElementById("nama").value = "";
+        document.getElementById("alamat").value = "";
+        document.getElementById("kota").value = "";
+        document.getElementById("provinsi").value = "";
+
+        // Set the tgl_registrasi value to current datetime
+        var today = new Date();
+        //document.getElementById("tgl_registrasi").value = today.toISOString().slice(0, -1);
+        document.getElementById("tgl_registrasi").value = today.getFullYear() + "-" + ("0" + (today.getMonth() + 1)).slice(-2) + "-" + ("0" + today.getDate()).slice(-2) + "T" + ("0" + today.getHours()).slice(-2) + ":" + ("0" + today.getMinutes()).slice(-2);
+
+        document.getElementById("aktif").checked = true;
+        document.getElementById("non-aktif").checked = false;
+
+    }
+
+    function setProvinsiValue() {
+        var dropdownItems = document.querySelectorAll(".dropdown-menu a");
+        dropdownItems.forEach(function(element) {
+            element.addEventListener("click", function(e) {
+            e.preventDefault();
+            var value = this.getAttribute("data-value");
+            var input = document.getElementById("provinsi");
+            input.value = value;
+            });
+        });
+    }
+
+    setProvinsiValue();
+
+    window.onload = function() {
+        // Assign handler to buttons
+        var submitBtn = document.getElementById('submit-data');
+        var updateBtn = document.getElementById('update-data');
+        var deleteBtn = document.getElementById('delete-data');
+        var clearBtn = document.getElementById('clear-data');
+        submitBtn.addEventListener('click', submitData);
+        updateBtn.addEventListener('click', updateData);
+        deleteBtn.addEventListener('click', deleteData);
+        clearBtn.addEventListener('click', clearData);
+        // Disable form validation on submit button click
+        submitBtn.addEventListener('mousedown', function(event) {
+            event.preventDefault();
+            isFormValid();
+        });
+
+
+    };
+
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" crossorigin="anonymous"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+</body>
+</html>
